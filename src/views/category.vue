@@ -7,22 +7,8 @@
           
           <button class="btn btn-info mb-3">Add New Category</button>
 
-          <table class="table table-bordered">
-            <tbody>
-              <tr v-for="category in categories" :key="category.name">
-                <td>{{ category.name }}</td>
-                <td>
-                  <button class="btn btn-primary">show</button>
-                </td>
-                <td>
-                  <button class="btn btn-success">edit</button>
-                </td>
-                <td>
-                  <button class="btn btn-danger">delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <AllCategories :categories="categories" />
+          
         </div>
       </div>
     </div>
@@ -30,7 +16,11 @@
 </template>
 
 <script>
+import AllCategories from '@/components/categories/display'
 export default {
+  components: {
+    AllCategories
+  },
   data() {
     return {
       categories: [
