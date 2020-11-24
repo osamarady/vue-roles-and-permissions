@@ -9,13 +9,13 @@
             <tr v-for="category in categories" :key="category.name">
             <td>{{ category.name }}</td>
             <td>
-                <button class="btn btn-primary btn-sm">show</button>
+                <button class="btn btn-primary btn-sm text-capitalize" @click="show(category)">show</button>
             </td>
             <td>
-                <button class="btn btn-success btn-sm">edit</button>
+                <button class="btn btn-success btn-sm text-capitalize">edit</button>
             </td>
             <td>
-                <button class="btn btn-danger btn-sm">delete</button>
+                <button class="btn btn-danger btn-sm text-capitalize" @click="del(category)">delete</button>
             </td>
             </tr>
         </tbody>
@@ -24,7 +24,16 @@
 
 <script>
 export default {
-    props: ['categories']
+    props: ['categories'],
+    emits: ['show-category', 'del-category'],
+    methods: {
+        show(catergory) {
+            this.$emit('show-category', catergory)
+        },
+        del(item) {
+            this.$emit('del-category', item)
+        }
+    }
 }
 </script>
 
