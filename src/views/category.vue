@@ -7,7 +7,7 @@
           
           <button class="btn btn-info mb-3" @click="AddNew">Add New Category</button>
 
-          <AllCategories :categories="categories" @show-category="showCategory" @del-category="delCategory" />
+          <AllCategories :categories="categories" @show-category="showCategory" @edit-category="editCategory" @del-category="delCategory" />
 
         </div>
       </div>
@@ -17,7 +17,9 @@
 
           <ShowCategories v-if="show" :category="category" />
 
-          <DelCategories v-if="del" :categoryName="category.name" @confirm="reult" />
+          <EditCategories v-if="edit" :category="category" @update-category="updateCategory" />
+
+          <DelCategories v-if="del" :category="category" @confirm="result" @cancel="reset" />
         </div>
       </div>
     </div>
@@ -28,12 +30,14 @@
 import AllCategories from '@/components/categories/display'
 import AddCategories from '@/components/categories/add'
 import ShowCategories from '@/components/categories/show'
+import EditCategories from '@/components/categories/edit'
 import DelCategories from '@/components/categories/delete'
 export default {
   components: {
     AllCategories,
     AddCategories,
     ShowCategories,
+    EditCategories,
     DelCategories
   },
   data() {
@@ -41,6 +45,7 @@ export default {
       open: false,
       add: false,
       show: false,
+      edit: false,
       del: false,
       category: '',
       categories: [
@@ -73,30 +78,45 @@ export default {
   },
   methods: {
     AddNew () {
+      this.reset()
       this.add = true
       this.open = true
-      this.show = false
-      this.del = false
     },
     newCategory (user) {
       this.categories.push(user)
     },
-    delCategory (category) {
-      this.open = true
-      this.del = true
-      this.add = false
-      this.show = false
-      this.category = category
-    },
-    confirm (result) {
-      this.categories.push(result)
-    },
     showCategory (category) {
+      this.reset()
       this.open = true
       this.show = true
-      this.add = false
-      this.del = false
       this.category = category
+    },
+    editCategory (category) {
+      this.reset()
+      this.open = true
+      this.edit = true
+      this.category = category
+    },
+    updateCategory (category) {
+      this.categories = this.categories.map(item => category.find(editItem => editItem.id === item.id) || item)
+      this.reset()
+    },
+    delCategory (category) {
+      this.reset()
+      this.open = true
+      this.del = true
+      this.category = category
+    },
+    result (category) {
+      this.categories = this.categories.filter(item => item.id != category.id)
+      this.reset()
+    },
+    reset () {
+      this.open = false
+      this.show = false
+      this.add = false
+      this.edit = false
+      this.del = false
     }
   }
 }

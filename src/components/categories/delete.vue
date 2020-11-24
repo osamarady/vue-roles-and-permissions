@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="card border-danger mb-3">
+        <div class="card border-danger">
             <div class="card-body text-danger">
                 <h5 class="card-title">Delete Category</h5>
-                <p class="card-text">Are You Sure You want to delete "{{ categoryName }}" Category</p>
+                <p class="card-text">Are You Sure You want to delete "{{ category.name }}" Category</p>
             </div>
             <div class="card-footer bg-transparent border-danger text-center">
-                <button class="btn btn-danger">Delete</button>
-                <button class="btn btn-primary ml-3">Cancel</button>
+                <button class="btn btn-danger" @click="DelCategory">Delete</button>
+                <button class="btn btn-primary ml-3" @click="cancelDel">Cancel</button>
             </div>
         </div>
     </div>
@@ -15,15 +15,18 @@
 
 <script>
 export default {
-    props: ['categoryName'],
+    props: ['category'],
     data() {
         return {
         }
     },
-    emits: ['confirm'],
+    emits: ['confirm', 'cancel'],
     methods: {
-        AddNewCategory () {
-            this.$emit('confirm', this.categoryName)
+        DelCategory () {
+            this.$emit('confirm', this.category)
+        },
+        cancelDel () {
+            this.$emit('cancel', true)
         }
     }
 }

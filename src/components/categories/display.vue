@@ -12,7 +12,7 @@
                 <button class="btn btn-primary btn-sm text-capitalize" @click="show(category)">show</button>
             </td>
             <td>
-                <button class="btn btn-success btn-sm text-capitalize">edit</button>
+                <button class="btn btn-success btn-sm text-capitalize" @click="edit(category)">edit</button>
             </td>
             <td>
                 <button class="btn btn-danger btn-sm text-capitalize" @click="del(category)">delete</button>
@@ -25,13 +25,16 @@
 <script>
 export default {
     props: ['categories'],
-    emits: ['show-category', 'del-category'],
+    emits: ['show-category', 'del-category', 'edit-category'],
     methods: {
         show(catergory) {
             this.$emit('show-category', catergory)
         },
         del(item) {
             this.$emit('del-category', item)
+        },
+        edit(item) {
+            this.$emit('edit-category', item)
         }
     }
 }
