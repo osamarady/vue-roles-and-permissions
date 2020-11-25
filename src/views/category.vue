@@ -4,22 +4,25 @@
     <div class="row">
       <div class="col-md-8">
         <div class="bg-white shadow-sm p-2">
+          <div v-if="g_err != null" class="alert alert-danger text-capitalize mb-2">
+            {{ g_err }}
+          </div>
           
           <button class="btn btn-info mb-3" @click="AddNew">Add New Category</button>
 
-          <AllCategories :categories="categories" @show-category="showCategory" @edit-category="editCategory" @del-category="delCategory" />
+          <AllCategories type="category" :categories="categories" @show-category="showCategory" @edit-category="editCategory" @del-category="delCategory" />
 
         </div>
       </div>
       <div class="col-md-4">
         <div v-if="open" class="bg-white shadow-sm p-2">
-          <AddCategories v-if="add" @new-category="newCategory" />
+          <AddCategories v-if="add" type="category" @new-category="newCategory" />
 
-          <ShowCategories v-if="show" :category="category" />
+          <ShowCategories v-if="show" type="category" :category="category" />
 
-          <EditCategories v-if="edit" :category="category" @update-category="updateCategory" />
+          <EditCategories v-if="edit" type="category" :category="category" @update-category="updateCategory" />
 
-          <DelCategories v-if="del" :category="category" @confirm="result" @cancel="reset" />
+          <DelCategories v-if="del" type="category" :category="category" @confirm="result" @cancel="reset" />
         </div>
       </div>
     </div>
@@ -32,6 +35,7 @@ import AddCategories from '@/components/categories/add'
 import ShowCategories from '@/components/categories/show'
 import EditCategories from '@/components/categories/edit'
 import DelCategories from '@/components/categories/delete'
+
 export default {
   components: {
     AllCategories,
@@ -47,6 +51,7 @@ export default {
       show: false,
       edit: false,
       del: false,
+      g_err: null,
       category: '',
       categories: [
         {
@@ -78,34 +83,62 @@ export default {
   },
   methods: {
     AddNew () {
-      this.reset()
-      this.add = true
-      this.open = true
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (user.role == 1 || user.role == 0) {
+        this.reset()
+        this.add = true
+        this.open = true
+        this.g_err = null
+      } else {
+        this.g_err = "you don't have permission to do add category"
+        this.reset()
+      }
     },
     newCategory (user) {
       this.categories.push(user)
     },
     showCategory (category) {
-      this.reset()
-      this.open = true
-      this.show = true
-      this.category = category
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (user.role == 2 || user.role == 0) {
+        this.reset()
+        this.open = true
+        this.show = true
+        this.category = category
+        this.g_err = null
+      } else {
+        this.g_err = "you don't have permission to Show category"
+        this.reset()
+      }
     },
     editCategory (category) {
-      this.reset()
-      this.open = true
-      this.edit = true
-      this.category = category
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (user.role == 3 || user.role == 0) {
+        this.reset()
+        this.open = true
+        this.edit = true
+        this.category = category
+        this.g_err = null
+      } else {
+        this.g_err = "you don't have permission to Edit category"
+        this.reset()
+      }
     },
     updateCategory (category) {
       this.categories = this.categories.map(item => category.find(editItem => editItem.id === item.id) || item)
       this.reset()
     },
     delCategory (category) {
-      this.reset()
-      this.open = true
-      this.del = true
-      this.category = category
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (user.role == 4 || user.role == 0) {
+        this.reset()
+        this.open = true
+        this.del = true
+        this.category = category
+        this.g_err = null
+      } else {
+        this.g_err = "you don't have permission to Delete category"
+        this.reset()
+      }
     },
     result (category) {
       this.categories = this.categories.filter(item => item.id != category.id)

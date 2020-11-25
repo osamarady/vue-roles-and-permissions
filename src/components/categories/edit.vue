@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p class="font-weight-bold">Edit "{{ category.name }}" Category</p>
+      <p class="font-weight-bold">Edit "{{ category.name }}" {{type}}</p>
       <form @submit.prevent>
           <div v-if="g_err != null" class="alert alert-danger text-capitalize mb-2">
             {{ g_err }}
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    props: ['category'],
+    props: ['category', 'type'],
     data() {
         return {
             catName: this.category.name,

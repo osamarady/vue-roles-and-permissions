@@ -2,7 +2,7 @@
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>
-            <th colspan="4">All Categories</th>
+            <th colspan="4">All {{type}}s</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
 
 <script>
 export default {
-    props: ['categories'],
+    props: ['categories', 'type'],
     emits: ['show-category', 'del-category', 'edit-category'],
     methods: {
         show(catergory) {

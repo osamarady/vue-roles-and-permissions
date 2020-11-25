@@ -2,8 +2,8 @@
     <div>
         <div class="card border-danger">
             <div class="card-body text-danger">
-                <h5 class="card-title">Delete Category</h5>
-                <p class="card-text">Are You Sure You want to delete "{{ category.name }}" Category</p>
+                <h5 class="card-title">Delete {{type}}</h5>
+                <p class="card-text">Are You Sure You want to delete "{{ category.name }}" {{type}}</p>
             </div>
             <div class="card-footer bg-transparent border-danger text-center">
                 <button class="btn btn-danger" @click="DelCategory">Delete</button>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    props: ['category'],
+    props: ['category', 'type'],
     data() {
         return {
         }

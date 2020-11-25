@@ -1,17 +1,17 @@
 <template>
   <div>
-      <p class="font-weight-bold">show Category</p>
+      <p class="font-weight-bold">show {{type}}</p>
       <hr>
       <p>
-          <strong>Category Title: </strong>
+          <strong>{{type}} Title: </strong>
           {{ category.name }}
       </p>
       <p>
-          <strong>Category Description: </strong>
+          <strong>{{type}} Description: </strong>
           {{ category.description }}
       </p>
       <p>
-          <strong>Category subscribtions: </strong>
+          <strong>{{type}} subscribtions: </strong>
           {{ category.subscribtions }} Subscriper
       </p>
   </div>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    props: ['category'],
+    props: ['category', 'type'],
     data() {
         return {
         }

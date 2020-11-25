@@ -1,6 +1,6 @@
 <template>
   <div>
-      <p class="font-weight-bold">Add New Category</p>
+      <p class="font-weight-bold">Add New {{type}}</p>
       <form @submit.prevent>
           <div v-if="g_err != null" class="alert alert-danger text-capitalize mb-2">
             {{ g_err }}
@@ -15,6 +15,7 @@
 
 <script>
 export default {
+    props: ['type'],
     data() {
         return {
             catName: '',
